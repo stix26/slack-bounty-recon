@@ -41,3 +41,12 @@ slackhq org: 0 secrets found
 === Subdomains ===
 quip.com: 20,097 subdomains (via subfinder)
 slack.com: subfinder failed
+
+=== slackb.com Deep Dive ===
+CORS: Wildcard on all endpoints, incl /health and /error (Confirmed)
+Credentials: Accepted but not reflected
+Dev instance: dev.slackb.com (same CORS config)
+/health: returns "ok" (200)
+/error: returns "unsupported method" (400) — route-aware
+Short codes: brute-force attempted, no matches
+Verdict: CORS misconfiguration, but no exploitable data returned (all 404s)
