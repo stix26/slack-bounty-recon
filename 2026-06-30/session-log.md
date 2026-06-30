@@ -77,3 +77,11 @@ Slack has awarded over $12M in bounties since 2015 across all their programs.
 Wildcard CORS is a real misconfiguration, but there's no exploitable content to exfiltrate.
 The service only responds with "404 page not found" on most endpoints and "ok" on /health.
 **Severity: Informational/Low** — misconfiguration noted, no security impact demonstrated.
+
+---
+## Report Submitted
+
+- **Report #3832895** — slackb.com Wildcard CORS
+- **Severity:** Low
+- **Program:** Slack (HackerOne)
+- **Status:** Submitted via HackerOne API
