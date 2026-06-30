@@ -1,0 +1,29 @@
+# Slack In-Scope Targets
+# Source: HackerOne structured scopes
+
+# Primary web
+slack.com
+api.slack.com
+app.slack.com
+edgeapi.slack.com
+
+# Infrastructure
+slackb.com - Short link service
+slackatwork.com - Marketing redirect
+slack-redir.net - URL redirect service
+slack-imgs.com - Image proxy
+slack-status.com - Status page
+
+# Quip (Salesforce)
+quip.com
+www.quip.com
+*.quip.com
+
+# Mobile apps
+com.Slack (Google Play)
+com.tinyspeck.chatlyio (iOS)
+com.slack.slackmdm (iOS)
+
+# Open source
+github.com/slackhq/nebula
+Slack Desktop Application
