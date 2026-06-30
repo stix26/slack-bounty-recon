@@ -49,3 +49,31 @@ Slack has awarded over $12M in bounties since 2015 across all their programs.
 - `~/Desktop/slack-recon/targets.txt`
 - `~/Desktop/slack-recon/scan-results.txt`
 - This document
+
+## slackb.com Deep Dive
+
+### CORS Configuration
+- `Access-Control-Allow-Origin: *` — confirmed on ALL endpoints including /health and /error
+- `cross-origin-resource-policy: cross-origin` — allows full response read from any origin
+- `Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE`
+- Credentials (cookies) accepted but not reflected in CORS headers
+
+### Infrastructure
+- **Production ingress**: `ingress-slackb-iad-prod-*` (envoy)
+- **Dev ingress**: `ingress-slackb-iad-dev-*` (envoy) at dev.slackb.com
+- **Health**: `/health` returns `ok` (200)
+- **Error routing**: `/error` returns 400 with "unsupported method" (different from 404)
+- All other paths return 404 "404 page not found"
+- Wildcard CORS present on dev.slackb.com too
+
+### Attempted Exploitation
+- Guessing short codes: no matches found
+- POST with JSON body: returns 404 
+- Custom headers (X-Slack-Ses-Id): accepted but no different behavior
+- Redirect parameters: no open redirects
+- Directory enumeration: every path returns consistent 404 except /health and /error
+
+### Verdict
+Wildcard CORS is a real misconfiguration, but there's no exploitable content to exfiltrate.
+The service only responds with "404 page not found" on most endpoints and "ok" on /health.
+**Severity: Informational/Low** — misconfiguration noted, no security impact demonstrated.
