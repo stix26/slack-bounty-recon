@@ -1,0 +1,43 @@
+=== Live Targets ===
+slack.com: 200 - Main site
+api.slack.com: 302 - API gateway
+app.slack.com: 200 - Web app
+slackb.com: 404 - Short link service (CORS wildcard)
+slackatwork.com: 301 - Redirects to slack.com
+slack-imgs.com: 200 - Image proxy service
+slack-status.com: 200 - Status page
+slack-redir.net: 000 - No response (redirect service)
+quip.com: 200 - Quip (Salesforce)
+www.quip.com: 302 - Quip redirect
+edgeapi.slack.com: 404 - Edge API
+spaces.pm: unknown
+
+=== CORS Findings ===
+slackb.com: Access-Control-Allow-Origin: * (wildcard!)
+  - Also allows: Content-Type, X-Slack-Ses-Id, User-Agent, X-Forwarded-For
+  - Responses with 404 page not found (low severity, no content to exfiltrate)
+  - Potential SSRF/request smuggling vector worth investigating
+
+=== Exposed Files (non-HTML responses) ===
+All targets: robots.txt, sitemap.xml (standard, benign)
+
+=== Open Redirects (VERIFIED FALSE POSITIVES) ===
+slackatwork.com: ?url= -> slack.com/?url= (passes param, doesn't forward to external)
+www.quip.com: ?url= -> quip.com/?url= (same pattern)
+All redirect to parent domain which ignores the param.
+
+=== API Endpoints ===
+slackb.com: /health -> 200
+slack-imgs.com: /api/, /api/v1/, /api/v2/, /graphql, /rest/ -> 400
+slack-imgs.com: /health -> 200
+edgeapi.slack.com: /health -> 200
+
+=== Wayback/Gau ===
+Failed on all targets (tool error)
+
+=== GitHub Secrets ===
+slackhq org: 0 secrets found
+
+=== Subdomains ===
+quip.com: 20,097 subdomains (via subfinder)
+slack.com: subfinder failed
